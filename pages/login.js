@@ -20,6 +20,12 @@ function SignInScreen() {
     <div style={{ textAlign: "center" }}>
       <h2 style={{ marginTop: 100 }}>👋 Welcome to WhoDat</h2>
       <h3>Let's get you logged in...</h3>
+      <div>
+        <i>
+          Log in with your work email only - it's how we connect you to your
+          co-workers.
+        </i>
+      </div>
       <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />
     </div>
   );

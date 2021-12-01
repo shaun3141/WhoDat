@@ -4,18 +4,47 @@ import Layout from "./../components/layout";
 import firebase from "../firebase/clientApp"; // Initializes Firebase
 import { getAuth } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useDocument } from "react-firebase-hooks/firestore";
+import { getFirestore, doc } from "firebase/firestore";
 
 function WhoDat({ Component, pageProps }) {
-  const [user, loading, error] = useAuthState(getAuth());
-  console.log(user);
+  const [authUser, authUserLoading, error] = useAuthState(getAuth());
+  const store = getFirestore(firebase);
+
+  const [user, userLoading, userError] = useDocument(
+    authUser ? doc(store, "users", authUser.uid) : undefined,
+    {
+      snapshotListenOptions: { includeMetadataChanges: true },
+    }
+  );
 
   return (
     <>
-      <Layout user={user}>
-        <Component {...pageProps} user={user} />
+      <Layout user={authUser}>
+        <Component
+          {...pageProps}
+          authUser={authUser}
+          authUserLoading={authUserLoading}
+          user={user && user.data()}
+          userLoading={userLoading}
+        />
       </Layout>
     </>
   );
 }
+
+// WhoDat.getInitialProps = async (ctx) => {
+//   // calls page's `getInitialProps` and fills `appProps.pageProps`
+//   // const appProps = await WhoDat.getInitialProps(appContext);
+//   const store = getFirestore(firebase);
+//   const user =
+//     (authUser && (await getDoc(doc(store, "users", authUser.uid)))) || null;
+
+//   console.log(authUser);
+//   console.log(user);
+//   console.log(user?.profile);
+
+//   return { authUser };
+// };
 
 export default WhoDat;

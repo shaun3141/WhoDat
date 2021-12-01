@@ -2,6 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "../styles/Home.module.css";
+import { Box } from "@mui/material";
 
 export default function Home() {
   return (
@@ -33,13 +34,17 @@ export default function Home() {
         </p>
 
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Create a Game &rarr;</h2>
-            <p>
-              Create a new WhoDat game for the office. It's free, easy, and all
-              about connections.
-            </p>
-          </a>
+          <Box className={styles.card}>
+            <Link href="/login" passHref className={styles.card}>
+              <Box>
+                <h2>Create a Game &rarr;</h2>
+                <p>
+                  Create a new WhoDat game for the office. It's free, easy, and
+                  all about connections.
+                </p>
+              </Box>
+            </Link>
+          </Box>
 
           <a href="https://nextjs.org/learn" className={styles.card}>
             <h2>Learn &rarr;</h2>
@@ -48,10 +53,7 @@ export default function Home() {
             </p>
           </a>
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
+          <a href="https://www.loom.com" className={styles.card}>
             <h2>Loom &rarr;</h2>
             <p>
               Loom powers WhoDat - Loom records quick videos of your screen and
