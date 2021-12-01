@@ -92,10 +92,10 @@ export default function Settings(props) {
                 Supported Email Domains
               </label>
               <Box style={{ margin: "15px 0px", fontStyle: "italic" }}>
-                Folks join WhoDat with their work email address. If their domain
+                {`Folks join WhoDat with their work email address. If their domain
                 matches a domain here, they will be part of your WhoDat game.
                 "Domain" is defined as what is after the "@" in your email
-                address.
+                address.`}
                 <br></br>
                 <br></br>
                 This feature is useful when people at the same organization have
