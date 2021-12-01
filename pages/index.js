@@ -28,9 +28,9 @@ export default function Home() {
           height={600}
         />
         <p>
-          WhoDat is a competitive game where you are shown short, fun videos of
-          your co-workers and must guess who they are to earn a spot on the
-          scoreboard
+          {`WhoDat is a competitive game where you are shown short, fun videos of
+your co-workers and must guess who they are to earn a spot on the
+scoreboard`}
         </p>
 
         <div className={styles.grid}>
@@ -39,8 +39,8 @@ export default function Home() {
               <Box>
                 <h2>Create a Game &rarr;</h2>
                 <p>
-                  Create a new WhoDat game for the office. It's free, easy, and
-                  all about connections.
+                  {`Create a new WhoDat game for the office. It's free, easy, and
+all about connections.`}
                 </p>
               </Box>
             </Link>
@@ -67,8 +67,7 @@ export default function Home() {
           >
             <h2>Connect &rarr;</h2>
             <p>
-              Learn about the project and connect with it's creator, Shaun
-              VanWeelden
+              {`Learn about the project and connect with it's creator, Shaun VanWeelden`}
             </p>
           </a>
         </div>
@@ -80,7 +79,7 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Made with 2 parts love, 1 part holiday spirit by Shaun VanWeelden
+          {`Made with 2 parts love, 1 part holiday spirit by Shaun VanWeelden`}
         </a>
       </footer>
     </div>
