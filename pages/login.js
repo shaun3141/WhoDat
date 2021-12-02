@@ -18,9 +18,9 @@ const uiConfig = {
 function SignInScreen() {
   return (
     <div style={{ textAlign: "center" }}>
-      <h2 style={{ marginTop: 100 }}>👋 Welcome to WhoDat</h2>
+      <h2 style={{ margin: 100 }}>👋 Welcome to WhoDat</h2>
       <h3>{`Let's get you logged in...`}</h3>
-      <div>
+      <div style={{ marginBottom: 30 }}>
         <i>
           {`Log in with your work email only - it's how we connect you to your co-workers.`}
         </i>

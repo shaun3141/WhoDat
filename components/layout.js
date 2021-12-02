@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import styles from "./layout.module.css";
-import { Button, Menu, MenuItem, ListItemIcon, Divider } from "@mui/material";
+import { Box, Menu, MenuItem, ListItemIcon, Divider } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import MovieFilterIcon from "@mui/icons-material/MovieFilter";
@@ -13,147 +13,33 @@ import Link from "next/link";
 import firebase from "../firebase/clientApp"; // Initializes Firebase
 import { getAuth } from "firebase/auth";
 
+import Navbar from "./navbar";
+
 export default function Layout(props) {
   const auth = getAuth();
 
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-  const handleLogout = () => {
-    setAnchorEl(null);
-    auth.signOut();
-  };
-
   return (
-    <div className={styles.container}>
-      <div style={{ textAlign: "right" }}>
-        <div style={{ display: "inline-block", marginTop: "-30px" }}>
-          {props?.user ? (
-            <div>
-              <Button
-                id="demo-customized-button"
-                aria-controls="demo-customized-menu"
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-                variant="outlined"
-                disableElevation
-                onClick={handleClick}
-              >
-                <div style={{ display: "inline-block" }}>
-                  👋 {props?.user?.displayName}
-                </div>
-                <MoreVertIcon />
-              </Button>
-              <StyledMenu
-                id="demo-positioned-menu"
-                aria-labelledby="demo-positioned-button"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-              >
-                <Link href="/whodat" passHref>
-                  <MenuItem onClick={handleClose}>
-                    <ListItemIcon>
-                      {/* <PlayCircleIcon fontSize="small" /> */}
-                      <div
-                        style={{
-                          fontSize: "1.4em",
-                          display: "inline-block",
-                          width: "2em",
-                          textAlign: "center",
-                          marginRight: 10,
-                          color: "initial",
-                        }}
-                      >
-                        🤔
-                      </div>
-                    </ListItemIcon>
-                    Who Dat?
-                  </MenuItem>
-                </Link>
-                <Link href="/me" passHref>
-                  <MenuItem onClick={handleClose}>
-                    <ListItemIcon>
-                      {/* <MovieFilterIcon fontSize="small" /> */}
-                      <div
-                        style={{
-                          fontSize: "1.4em",
-                          display: "inline-block",
-                          width: "2em",
-                          textAlign: "center",
-                          marginRight: 10,
-                          color: "initial",
-                        }}
-                      >
-                        💁‍♀️💁‍♂️
-                      </div>
-                    </ListItemIcon>
-                    Me
-                  </MenuItem>
-                </Link>
-                <Link href="/settings" passHref>
-                  <MenuItem onClick={handleClose}>
-                    <ListItemIcon>
-                      {/* <SettingsIcon fontSize="small" /> */}
-                      <div
-                        style={{
-                          fontSize: "1.4em",
-                          display: "inline-block",
-                          width: "2em",
-                          textAlign: "center",
-                          marginRight: 10,
-                          color: "initial",
-                        }}
-                      >
-                        🤓
-                      </div>
-                    </ListItemIcon>
-                    Settings
-                  </MenuItem>
-                </Link>
-                <Divider />
-                <MenuItem onClick={handleLogout}>
-                  <ListItemIcon>
-                    {/* <Logout fontSize="small" /> */}
-                    <div
-                      style={{
-                        fontSize: "1.4em",
-                        display: "inline-block",
-                        width: "2em",
-                        textAlign: "center",
-                        marginRight: 10,
-                        color: "initial",
-                      }}
-                    >
-                      ✌️
-                    </div>
-                  </ListItemIcon>
-                  Log out
-                </MenuItem>
-              </StyledMenu>
-            </div>
-          ) : (
-            <Link href="/login" passHref>
-              <Button variant="contained">Get Started</Button>
-            </Link>
-          )}
-        </div>
-      </div>
-      {props.children}
-    </div>
+    <>
+      <main className={styles.main}>
+        <Navbar
+          user={props.user}
+          authUser={props.authUser}
+          className={styles.container}
+        />
+
+        <Box className={styles.container}>{props.children}</Box>
+
+        <footer className={styles.footer}>
+          <a
+            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {`Made with 2 parts love, 1 part holiday spirit by Shaun VanWeelden`}
+          </a>
+        </footer>
+      </main>
+    </>
   );
 }
 
