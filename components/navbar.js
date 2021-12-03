@@ -64,7 +64,7 @@ export default function Navbar(props) {
                   horizontal: "left",
                 }}
               >
-                <Link href="/whodat" passHref>
+                <Link href="/" passHref>
                   <MenuItem onClick={handleClose}>
                     <ListItemIcon>
                       {/* <PlayCircleIcon fontSize="small" /> */}

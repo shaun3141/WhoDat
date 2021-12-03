@@ -13,7 +13,11 @@ export default function Home(props) {
 
       {console.log(props)}
 
-      {props.user ? <Game /> : <Landing />}
+      {props.authUser ? (
+        <Game user={props.user} userLoading={props.userLoading} />
+      ) : (
+        <Landing />
+      )}
 
       {/* <main className={styles.main}>
         <h1 className={styles.title}>

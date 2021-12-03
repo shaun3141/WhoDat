@@ -109,233 +109,218 @@ export default function Me(props) {
       <Head>
         <title>WhoDat | Me</title>
       </Head>
-      <div
-        style={{
-          textAlign: "center",
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "center",
-        }}
-      >
+
+      {props.userLoading && (
         <Box
+          sx={{ display: "flex", justifyContent: "center", margin: "100px" }}
+        >
+          <CircularProgress size={100} />
+        </Box>
+      )}
+
+      {!props.userLoading && (
+        <div
           style={{
-            width: "40%",
-            padding: 20,
-            display: "inline-block",
-            textAlign: "left",
+            textAlign: "center",
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
           }}
         >
-          <Paper style={{ padding: 10 }}>
-            <Box style={{ fontSize: 24, fontWeight: "bold" }}>Your Profile</Box>
-            <TextField
-              id="name"
-              label="Name"
-              variant="outlined"
-              fullWidth
-              style={{ margin: "15px auto" }}
-              helperText="This is what people will need to type in to guess who you are."
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">{nameLoading}</InputAdornment>
-                ),
-              }}
-              value={name || (props.user && props.user?.profile?.name) || ""}
-              onChange={async (e) => {
-                setName(e.target.value);
-                let profile = props.user.profile || {};
-                profile = { ...profile, name: e.target.value };
-                setNameLoading(<FormLoadingSpinner />);
-                try {
-                  await updateDoc(doc(store, "users", props.user.uid), {
-                    profile: profile,
-                  });
-                  setNameLoading(<CheckIcon color="success" />);
-                } catch (e) {
-                  console.error("Error updating document: ", e);
-                  setErrorOccured(true);
+          <Box
+            style={{
+              width: "40%",
+              padding: 20,
+              display: "inline-block",
+              textAlign: "left",
+            }}
+          >
+            <Paper style={{ padding: 10 }}>
+              <Box style={{ fontSize: 24, fontWeight: "bold" }}>
+                Your Profile
+              </Box>
+              <TextField
+                id="name"
+                label="Name"
+                variant="outlined"
+                fullWidth
+                style={{ margin: "15px auto" }}
+                helperText="This is what people will need to type in to guess who you are."
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      {nameLoading}
+                    </InputAdornment>
+                  ),
+                }}
+                value={name || (props.user && props.user?.profile?.name) || ""}
+                onChange={async (e) => {
+                  setName(e.target.value);
+                  let profile = props.user.profile || {};
+                  profile = { ...profile, name: e.target.value };
+                  setNameLoading(<FormLoadingSpinner />);
+                  try {
+                    await updateDoc(doc(store, "users", props.user.uid), {
+                      profile: profile,
+                    });
+                    setNameLoading(<CheckIcon color="success" />);
+                  } catch (e) {
+                    console.error("Error updating document: ", e);
+                    setErrorOccured(true);
+                  }
+                }}
+              />
+              <TextField
+                id="nickname"
+                label="Nickname (optional)"
+                variant="outlined"
+                fullWidth
+                style={{ margin: "15px auto" }}
+                helperText="This will show up like 'Name (nickname)' and be searchable when folks are guessing."
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      {nicknameLoading}
+                    </InputAdornment>
+                  ),
+                }}
+                value={
+                  nickname ||
+                  (props.user && props.user?.profile?.nickname) ||
+                  ""
                 }
-              }}
-            />
-            <TextField
-              id="nickname"
-              label="Nickname (optional)"
-              variant="outlined"
-              fullWidth
-              style={{ margin: "15px auto" }}
-              helperText="This will show up like 'Name (nickname)' and be searchable when folks are guessing."
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    {nicknameLoading}
-                  </InputAdornment>
-                ),
-              }}
-              value={
-                nickname || (props.user && props.user?.profile?.nickname) || ""
-              }
-              onChange={async (e) => {
-                setNickname(e.target.value);
-                let profile = props.user.profile || {};
-                profile = { ...profile, nickname: e.target.value };
-                setNicknameLoading(<FormLoadingSpinner />);
-                try {
-                  await updateDoc(doc(store, "users", props.user.uid), {
-                    profile: profile,
-                  });
-                  setNicknameLoading(<CheckIcon color="success" />);
-                } catch (e) {
-                  console.error("Error updating document: ", e);
-                  setErrorOccured(true);
+                onChange={async (e) => {
+                  setNickname(e.target.value);
+                  let profile = props.user.profile || {};
+                  profile = { ...profile, nickname: e.target.value };
+                  setNicknameLoading(<FormLoadingSpinner />);
+                  try {
+                    await updateDoc(doc(store, "users", props.user.uid), {
+                      profile: profile,
+                    });
+                    setNicknameLoading(<CheckIcon color="success" />);
+                  } catch (e) {
+                    console.error("Error updating document: ", e);
+                    setErrorOccured(true);
+                  }
+                }}
+              />
+              <TextField
+                id="pronouns"
+                label="Preferred Pronouns (optional)"
+                variant="outlined"
+                fullWidth
+                style={{ margin: "15px auto" }}
+                helperText="For example, 'she/her'"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      {pronounsLoading}
+                    </InputAdornment>
+                  ),
+                }}
+                value={
+                  pronouns ||
+                  (props.user && props.user?.profile?.pronouns) ||
+                  ""
                 }
-              }}
-            />
-            <TextField
-              id="pronouns"
-              label="Preferred Pronouns (optional)"
-              variant="outlined"
-              fullWidth
-              style={{ margin: "15px auto" }}
-              helperText="For example, 'she/her'"
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    {pronounsLoading}
-                  </InputAdornment>
-                ),
-              }}
-              value={
-                pronouns || (props.user && props.user?.profile?.pronouns) || ""
-              }
-              onChange={async (e) => {
-                setPronouns(e.target.value);
-                let profile = props.user.profile || {};
-                profile = { ...profile, pronouns: e.target.value };
-                setPronounsLoading(<FormLoadingSpinner />);
-                try {
-                  await updateDoc(doc(store, "users", props.user.uid), {
-                    profile: profile,
-                  });
-                  setPronounsLoading(<CheckIcon color="success" />);
-                } catch (e) {
-                  console.error("Error updating document: ", e);
-                  setErrorOccured(true);
+                onChange={async (e) => {
+                  setPronouns(e.target.value);
+                  let profile = props.user.profile || {};
+                  profile = { ...profile, pronouns: e.target.value };
+                  setPronounsLoading(<FormLoadingSpinner />);
+                  try {
+                    await updateDoc(doc(store, "users", props.user.uid), {
+                      profile: profile,
+                    });
+                    setPronounsLoading(<CheckIcon color="success" />);
+                  } catch (e) {
+                    console.error("Error updating document: ", e);
+                    setErrorOccured(true);
+                  }
+                }}
+              />
+              <TextField
+                id="title"
+                label="Title / What do you do?"
+                variant="outlined"
+                fullWidth
+                style={{ margin: "15px auto" }}
+                helperText="For example, 'VP of Engineering'"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      {titleLoading}
+                    </InputAdornment>
+                  ),
+                }}
+                value={
+                  title || (props.user && props.user?.profile?.title) || ""
                 }
-              }}
-            />
-            <TextField
-              id="title"
-              label="Title / What do you do?"
-              variant="outlined"
-              fullWidth
-              style={{ margin: "15px auto" }}
-              helperText="For example, 'VP of Engineering'"
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">{titleLoading}</InputAdornment>
-                ),
-              }}
-              value={title || (props.user && props.user?.profile?.title) || ""}
-              onChange={async (e) => {
-                setTitle(e.target.value);
-                let profile = props.user.profile || {};
-                profile = { ...profile, title: e.target.value };
-                setTitleLoading(<FormLoadingSpinner />);
-                try {
-                  await updateDoc(doc(store, "users", props.user.uid), {
-                    profile: profile,
-                  });
-                  setTitleLoading(<CheckIcon color="success" />);
-                } catch (e) {
-                  console.error("Error updating document: ", e);
-                  setErrorOccured(true);
-                }
-              }}
-            />
-            <TextField
-              id="bio"
-              label="Bio / Fun Fact / Something Extra"
-              multiline
-              rows={4}
-              style={{ margin: "15px auto" }}
-              helperText="Add whatever you'd like here, we'll show it to folks once they guess."
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">{bioLoading}</InputAdornment>
-                ),
-              }}
-              value={bio || (props.user && props.user?.profile?.bio) || ""}
-              onChange={async (e) => {
-                setBio(e.target.value);
-                let profile = props.user.profile || {};
-                profile = { ...profile, bio: e.target.value };
-                setBioLoading(<FormLoadingSpinner />);
-                try {
-                  await updateDoc(doc(store, "users", props.user.uid), {
-                    profile: profile,
-                  });
-                  setBioLoading(<CheckIcon color="success" />);
-                } catch (e) {
-                  console.error("Error updating document: ", e);
-                  setErrorOccured(true);
-                }
-              }}
-            />
-          </Paper>
-        </Box>
-        <Box style={{ width: "60%", padding: 20, display: "inline-block" }}>
-          <Paper style={{ padding: 10, textAlign: "left" }}>
-            <Box style={{ fontSize: 24, fontWeight: "bold" }}>
-              {"Here's what to do"}
-            </Box>
-            <Box
-              style={{
-                margin: "10px 0px",
-                border: "solid #eee 2px",
-                borderRadius: 10,
-                display: "flex",
-              }}
-            >
+                onChange={async (e) => {
+                  setTitle(e.target.value);
+                  let profile = props.user.profile || {};
+                  profile = { ...profile, title: e.target.value };
+                  setTitleLoading(<FormLoadingSpinner />);
+                  try {
+                    await updateDoc(doc(store, "users", props.user.uid), {
+                      profile: profile,
+                    });
+                    setTitleLoading(<CheckIcon color="success" />);
+                  } catch (e) {
+                    console.error("Error updating document: ", e);
+                    setErrorOccured(true);
+                  }
+                }}
+              />
+              <TextField
+                id="bio"
+                label="Bio / Fun Fact / Something Extra"
+                multiline
+                rows={4}
+                style={{ margin: "15px auto" }}
+                helperText="Add whatever you'd like here, we'll show it to folks once they guess."
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">{bioLoading}</InputAdornment>
+                  ),
+                }}
+                value={bio || (props.user && props.user?.profile?.bio) || ""}
+                onChange={async (e) => {
+                  setBio(e.target.value);
+                  let profile = props.user.profile || {};
+                  profile = { ...profile, bio: e.target.value };
+                  setBioLoading(<FormLoadingSpinner />);
+                  try {
+                    await updateDoc(doc(store, "users", props.user.uid), {
+                      profile: profile,
+                    });
+                    setBioLoading(<CheckIcon color="success" />);
+                  } catch (e) {
+                    console.error("Error updating document: ", e);
+                    setErrorOccured(true);
+                  }
+                }}
+              />
+            </Paper>
+          </Box>
+          <Box style={{ width: "60%", padding: 20, display: "inline-block" }}>
+            <Paper style={{ padding: 10, textAlign: "left" }}>
+              <Box style={{ fontSize: 24, fontWeight: "bold" }}>
+                {"Here's what to do"}
+              </Box>
               <Box
                 style={{
-                  width: "60%",
-                  borderRight: "solid #eee 2px",
-                  padding: 10,
+                  margin: "10px 0px",
+                  border: "solid #eee 2px",
+                  borderRadius: 10,
+                  display: "flex",
                 }}
               >
                 <Box
                   style={{
-                    fontSize: 20,
-                    fontWeight: "bold",
-                    display: "flex",
-                  }}
-                >
-                  <LoopIcon
-                    sx={{ fontSize: 24 }}
-                    style={{ marginRight: 5, cursor: "pointer" }}
-                    onClick={() => {
-                      setPromptId(Math.floor(Math.random() * prompts.length));
-                    }}
-                  />
-                  <Box>{"Answer this..."}</Box>
-                </Box>
-                <Box
-                  style={{
-                    padding: 5,
-                    paddingTop: 15,
-                    color: "#1565c0",
-                    fontSize: 20,
-                    fontWeight: "bold",
-                  }}
-                >
-                  {prompts[promptId].prompt}
-                </Box>
-                <Box style={{ padding: 5, fontStyle: "italic" }}>
-                  {prompts[promptId].description}
-                </Box>
-              </Box>
-              <Box style={{ width: "39%" }}>
-                <Box
-                  style={{
+                    width: "60%",
+                    borderRight: "solid #eee 2px",
                     padding: 10,
                   }}
                 >
@@ -343,24 +328,61 @@ export default function Me(props) {
                     style={{
                       fontSize: 20,
                       fontWeight: "bold",
-                      marginBottom: 10,
+                      display: "flex",
                     }}
                   >
-                    {"Tips"}
+                    <LoopIcon
+                      sx={{ fontSize: 24 }}
+                      style={{ marginRight: 5, cursor: "pointer" }}
+                      onClick={() => {
+                        setPromptId(Math.floor(Math.random() * prompts.length));
+                      }}
+                    />
+                    <Box>{"Answer this..."}</Box>
                   </Box>
-                  <Box>{"👍 15-60 seconds"}</Box>
-                  <Box>{"👍 'Camera Only' video"}</Box>
-                  <Box>
-                    {"👎 Do "}
-                    <b>NOT</b>
-                    {
-                      " say your name - folks will be guessing that based on your video!"
-                    }
+                  <Box
+                    style={{
+                      padding: 5,
+                      paddingTop: 15,
+                      color: "#1565c0",
+                      fontSize: 20,
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {prompts[promptId].prompt}
+                  </Box>
+                  <Box style={{ padding: 5, fontStyle: "italic" }}>
+                    {prompts[promptId].description}
+                  </Box>
+                </Box>
+                <Box style={{ width: "39%" }}>
+                  <Box
+                    style={{
+                      padding: 10,
+                    }}
+                  >
+                    <Box
+                      style={{
+                        fontSize: 20,
+                        fontWeight: "bold",
+                        marginBottom: 10,
+                      }}
+                    >
+                      {"Tips"}
+                    </Box>
+                    <Box>{"👍 15-60 seconds"}</Box>
+                    <Box>{"👍 'Camera Only' video"}</Box>
+                    <Box>
+                      {"👎 Do "}
+                      <b>NOT</b>
+                      {
+                        " say your name - folks will be guessing that based on your video!"
+                      }
+                    </Box>
                   </Box>
                 </Box>
               </Box>
-            </Box>
-            {/* <Button
+              {/* <Button
               variant="contained"
               style={{
                 width: "100%",
@@ -373,48 +395,48 @@ export default function Me(props) {
             >
               {prompts[0].prompt}
             </Button> */}
-            <Button
-              variant="contained"
-              id={BUTTON_ID}
-              style={{
-                width: "100%",
-                height: 160,
-                fontSize: 42,
-                margin: "20px 0",
-              }}
-            >
-              Record
-            </Button>
-            <Box
-              style={{
-                fontSize: 24,
-                fontWeight: "bold",
-                marginBottom: 10,
-              }}
-            >
-              {`${
-                props.user?.profile?.recordings?.length || 0
-              }/5 Saved Recordings`}
-            </Box>
-            <Box>
-              {props.user?.profile?.recordings &&
-                props.user.profile.recordings.map((r) => {
-                  return (
-                    <Box key={r.videoUrl}>
-                      <Box style={{ padding: 5, fontWeight: "bold" }}>
-                        {r.prompt}
+              <Button
+                variant="contained"
+                id={BUTTON_ID}
+                style={{
+                  width: "100%",
+                  height: 160,
+                  fontSize: 42,
+                  margin: "20px 0",
+                }}
+              >
+                Record
+              </Button>
+              <Box
+                style={{
+                  fontSize: 24,
+                  fontWeight: "bold",
+                  marginBottom: 10,
+                }}
+              >
+                {`${
+                  props.user?.profile?.recordings?.length || 0
+                }/5 Saved Recordings`}
+              </Box>
+              <Box>
+                {props.user?.profile?.recordings &&
+                  props.user.profile.recordings.map((r) => {
+                    return (
+                      <Box key={r.videoUrl}>
+                        <Box style={{ padding: 5, fontWeight: "bold" }}>
+                          {r.prompt}
+                        </Box>
+                        <Box style={{ padding: "5px" }}>
+                          <i>{r.description}</i>
+                        </Box>
+                        <Box
+                          dangerouslySetInnerHTML={{ __html: r.videoHTML }}
+                        ></Box>
                       </Box>
-                      <Box style={{ padding: "5px" }}>
-                        <i>{r.description}</i>
-                      </Box>
-                      <Box
-                        dangerouslySetInnerHTML={{ __html: r.videoHTML }}
-                      ></Box>
-                    </Box>
-                  );
-                })}
-            </Box>
-            {/* <Flicking circular={true} plugins={[new Arrow()]}>
+                    );
+                  })}
+              </Box>
+              {/* <Flicking circular={true} plugins={[new Arrow()]}>
               <div className="card-panel">1</div>
               <div className="card-panel">2</div>
               <div className="card-panel">3</div>
@@ -423,11 +445,13 @@ export default function Me(props) {
                 <span className="flicking-arrow-next"></span>
               </ViewportSlot>
             </Flicking> */}
-            {/* <div dangerouslySetInnerHTML={{ __html: videoHTML }}></div> */}
-          </Paper>
-        </Box>
-        {/* <button id={BUTTON_ID}>Record</button> */}
-      </div>
+              {/* <div dangerouslySetInnerHTML={{ __html: videoHTML }}></div> */}
+            </Paper>
+          </Box>
+          {/* <button id={BUTTON_ID}>Record</button> */}
+        </div>
+      )}
+
       <Snackbar
         open={errorOccured}
         autoHideDuration={6000}
