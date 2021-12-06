@@ -6,7 +6,22 @@ import { DataGrid } from "@mui/x-data-grid";
 
 import LoadingSpinner from "./loadingSpinner";
 
+import firebase from "../firebase/clientApp";
+import { collection, query, where } from "firebase/firestore";
+import { useCollectionData } from "react-firebase-hooks/firestore";
+
 export default function Leaderboard(props) {
+  const [allUsers, allUsersLoading, allUsersError] = useCollectionData(
+    props.user &&
+      query(
+        collection(props.store, "users"),
+        where("organization", "==", props.user.organization)
+      ),
+    {
+      snapshotListenOptions: { includeMetadataChanges: false },
+    }
+  );
+
   const columns = [
     {
       field: "id",
@@ -32,9 +47,13 @@ export default function Leaderboard(props) {
     },
   ];
 
-  const data = props.allUsers
-    ? props.allUsers.map((u, i) => {
-        return { id: i + 1, name: u.displayName, score: u.score || 0 };
+  const data = allUsers
+    ? allUsers.map((u, i) => {
+        return {
+          id: i + 1,
+          name: u.displayName,
+          score: u?.profile?.score || 0,
+        };
       })
     : [];
 

@@ -63,10 +63,10 @@ export default function Game(props) {
       {!allUsersLoading && (
         <Grid container spacing={2}>
           <Grid item xs={7}>
-            <Guesser allUsers={allUsers} />
+            <Guesser allUsers={allUsers} store={store} user={props.user} />
           </Grid>
           <Grid item xs={5}>
-            <Leaderboard allUsers={allUsers} />
+            <Leaderboard allUsers={allUsers} store={store} user={props.user} />
           </Grid>
         </Grid>
       )}

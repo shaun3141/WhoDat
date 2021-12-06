@@ -7,7 +7,7 @@ import firebase from "../firebase/clientApp";
 import {
   getFirestore,
   collection,
-  addDoc,
+  updateDoc,
   doc,
   getDoc,
 } from "firebase/firestore";
@@ -19,6 +19,9 @@ export default function Settings(props) {
   useEffect(() => {}, []);
   const store = getFirestore(firebase);
   const [organization, setOrganization] = useState(null);
+  const [domains, setDomains] = useState(null);
+  const [newDomain, setNewDomain] = useState("");
+  const [errorOccured, setErrorOccured] = useState(false);
   // const [organizations, organizationsLoading, error] = useCollection(
   //   collection(store, "organizations"),
   //   {}
@@ -26,29 +29,22 @@ export default function Settings(props) {
 
   useEffect(() => {
     async function fetchData() {
-      try {
-        const org = await getDoc(
-          doc(store, "organizations", props.user.organization)
-        );
-        setOrganization(org.data());
-        console.log("org", org.data());
-      } catch (e) {
-        console.error("Error updating document: ", e);
-        // setErrorOccured(true);
+      if (props?.user?.organization) {
+        try {
+          const org = await getDoc(
+            doc(store, "organizations", props.user.organization)
+          );
+          setOrganization(org.data());
+          setDomains(org.data().domains);
+          console.log("org", org.data());
+        } catch (e) {
+          console.error("Error updating document: ", e);
+          // setErrorOccured(true);
+        }
       }
     }
     fetchData();
   }, [props.user, store]);
-
-  const defaultEmailDomain = props.user && props.user.email.split("@")[1];
-
-  const Input = styled("input")({
-    display: "none",
-  });
-
-  // if (!organizationsLoading && organizations) {
-  //   organizations.docs.map((doc) => console.log(doc.data()));
-  // }
 
   return (
     <>
@@ -58,29 +54,6 @@ export default function Settings(props) {
       <div style={{ textAlign: "center" }}>
         <h1>Settings</h1>
         <div style={{ display: "inline-block", width: 300 }}>
-          {/* <TextField
-            id="outlined-basic"
-            label="Game Name"
-            variant="outlined"
-            style={{ width: "100%" }}
-            onChange={(e) => setGameName(e.target.value)}
-          />
-          <label htmlFor="contained-button-file">
-            <Input
-              accept="image/*"
-              id="contained-button-file"
-              multiple
-              type="file"
-            />
-            <Button
-              variant="outlined"
-              component="span"
-              style={{ width: "100%", marginTop: 30 }}
-            >
-              Upload a Logo (Optional)
-            </Button>
-          </label> */}
-
           <div
             style={{
               textAlign: "left",
@@ -89,7 +62,7 @@ export default function Settings(props) {
           >
             <Box>
               <label style={{ fontWeight: "bold", fontSize: "1.2em" }}>
-                Supported Email Domains
+                Associated Email Domains
               </label>
               <Box style={{ margin: "15px 0px", fontStyle: "italic" }}>
                 {`Folks join WhoDat with their work email address. If their domain
@@ -99,15 +72,21 @@ export default function Settings(props) {
                 <br></br>
                 <br></br>
                 This feature is useful when people at the same organization have
-                different potential endings for their email address.
+                different domains for their email address (for example, folks
+                have both @getloom.com and @loom.com emails).
               </Box>
             </Box>
-
-            <Chip
-              style={{ margin: "10px 0px" }}
-              label={defaultEmailDomain}
-              variant="outlined"
-            />
+            {domains &&
+              domains.map((d) => {
+                return (
+                  <Chip
+                    key={d}
+                    style={{ margin: "10px 5px" }}
+                    label={d}
+                    variant="outlined"
+                  />
+                );
+              })}
 
             <Paper
               component="form"
@@ -121,13 +100,31 @@ export default function Settings(props) {
               <InputBase
                 sx={{ ml: 1, flex: 1 }}
                 placeholder="domain.com"
-                inputProps={{ "aria-label": "domain" }}
+                inputProps={{ "aria-label": "domains" }}
+                value={newDomain}
                 onChange={(e) => {
-                  console.log(e, e.target.value);
-                  return "hi";
+                  setNewDomain(e.target.value);
                 }}
               />
-              <IconButton type="submit" sx={{ p: "10px" }} aria-label="search">
+              <IconButton
+                sx={{ p: "10px" }}
+                aria-label="Add Domain"
+                onClick={async () => {
+                  setDomains([...domains, newDomain]);
+                  setNewDomain("");
+                  try {
+                    await updateDoc(
+                      doc(store, "organizations", props.user.organization),
+                      {
+                        domains: [...domains, newDomain],
+                      }
+                    );
+                  } catch (e) {
+                    console.error("Error updating document: ", e);
+                    setErrorOccured(true);
+                  }
+                }}
+              >
                 <AddIcon />
               </IconButton>
             </Paper>

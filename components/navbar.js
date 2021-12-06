@@ -147,7 +147,7 @@ export default function Navbar(props) {
             </div>
           ) : (
             <Link href="/login" passHref>
-              <Button variant="contained">Get Started</Button>
+              <Button variant="contained">Play WhoDat</Button>
             </Link>
           )}
         </div>
