@@ -9,12 +9,14 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { styled, alpha } from "@mui/material/styles";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import firebase from "../firebase/clientApp"; // Initializes Firebase
 import { getAuth } from "firebase/auth";
 
 export default function Navbar(props) {
   const auth = getAuth();
+  const router = useRouter();
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -27,6 +29,7 @@ export default function Navbar(props) {
   const handleLogout = () => {
     setAnchorEl(null);
     auth.signOut();
+    router.push("/");
   };
 
   return (
@@ -147,7 +150,7 @@ export default function Navbar(props) {
             </div>
           ) : (
             <Link href="/login" passHref>
-              <Button variant="contained">Play WhoDat</Button>
+              <Button variant="contained">Start Playing</Button>
             </Link>
           )}
         </div>

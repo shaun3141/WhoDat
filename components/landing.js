@@ -42,7 +42,7 @@ export default function Landing(props) {
         <video width="800" height="375" muted autoPlay>
           <source src="/ReturningToWork.mp4" type="video/mp4" />
         </video>
-        <h2>Avoid Awkward Encounters at the office with WhoDat.</h2>
+        <h2>Avoid Awkward Encounters at the Office with WhoDat.</h2>
         <p>
           {`WhoDat is a competitive game where you are shown short, fun videos of
 your co-workers and must guess who they are to earn a spot on the
@@ -53,7 +53,7 @@ scoreboard`}
           <Box className={styles.card}>
             <Link href="/login" passHref className={styles.card}>
               <Box>
-                <h2>Create a Game &rarr;</h2>
+                <h2>Start Playing &rarr;</h2>
                 <p>
                   {`Create a new WhoDat game for the office. It's free, easy, and
 all about connections.`}
@@ -63,7 +63,7 @@ all about connections.`}
           </Box>
 
           <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
+            <h2>{`What's WhoDat?`} &rarr;</h2>
             <p>
               Not sure what the hype is all about? No worries, we will show you.
             </p>

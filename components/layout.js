@@ -35,7 +35,7 @@ export default function Layout(props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            {`Made with 2 parts love, 1 part holiday spirit by Shaun VanWeelden`}
+            {`Made with Holiday Spirit by Shaun VanWeelden`}
           </a>
         </footer>
       </main>
