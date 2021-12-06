@@ -24,6 +24,7 @@ import {
   getDoc,
   updateDoc,
 } from "firebase/firestore";
+import { useDocument } from "react-firebase-hooks/firestore";
 import prompts from "../components/prompts";
 
 const API_KEY = "68b7bc76-7a37-44a0-82dd-9ed12a18d467";
@@ -47,7 +48,13 @@ export default function Me(props) {
   const [promptId, setPromptId] = useState(
     Math.floor(Math.random() * prompts.length)
   );
-  const [videoHtmls, setVideoHtmls] = useState([]);
+
+  const [currentUser, currentUserLoading, currentUserError] = useDocument(
+    props.authUser ? doc(store, "users", props.authUser.uid) : undefined,
+    {
+      snapshotListenOptions: { includeMetadataChanges: true },
+    }
+  );
 
   useEffect(() => {
     async function setupLoom() {
@@ -83,7 +90,7 @@ export default function Me(props) {
           .replace(`width="12009599006321320"`, `width="521"`)
           .replace(`height="9007199254740991"`, `height="390.75"`);
 
-        let profile = props.user.profile || {};
+        let profile = (currentUser && currentUser.data())?.profile || {};
         let recordings = profile.recordings || [];
         recordings.push({
           ...prompts[promptId],
@@ -99,9 +106,12 @@ export default function Me(props) {
 
         // Upload the updated profile to Firebase
         try {
-          await updateDoc(doc(store, "users", props.user.uid), {
-            profile: profile,
-          });
+          await updateDoc(
+            doc(store, "users", (currentUser && currentUser.data())?.uid),
+            {
+              profile: profile,
+            }
+          );
         } catch (e) {
           console.error("Error updating document: ", e);
           setErrorOccured(true);
@@ -110,7 +120,7 @@ export default function Me(props) {
     }
 
     setupLoom();
-  }, [props.user, store, promptId]);
+  }, [currentUser, store, promptId]);
 
   return (
     <>
@@ -118,7 +128,7 @@ export default function Me(props) {
         <title>WhoDat | Me</title>
       </Head>
 
-      {props.userLoading && (
+      {currentUserLoading && (
         <Box
           sx={{ display: "flex", justifyContent: "center", margin: "100px" }}
         >
@@ -126,7 +136,7 @@ export default function Me(props) {
         </Box>
       )}
 
-      {!props.userLoading && (
+      {!currentUserLoading && (
         <Box
         // style={{
         //   textAlign: "center",
@@ -159,11 +169,13 @@ export default function Me(props) {
                       ),
                     }}
                     value={
-                      name || (props.user && props.user?.profile?.name) || ""
+                      name ||
+                      (currentUser && currentUser.data())?.profile?.name ||
+                      ""
                     }
                     onChange={async (e) => {
                       setName(e.target.value);
-                      let profile = props.user.profile || {};
+                      let profile = currentUser.data()?.profile || {};
                       profile = { ...profile, name: e.target.value };
                       setNameLoading(<FormLoadingSpinner />);
                       try {
@@ -195,12 +207,12 @@ export default function Me(props) {
                     }}
                     value={
                       nickname ||
-                      (props.user && props.user?.profile?.nickname) ||
+                      (currentUser && currentUser.data())?.profile?.nickname ||
                       ""
                     }
                     onChange={async (e) => {
                       setNickname(e.target.value);
-                      let profile = props.user.profile || {};
+                      let profile = currentUser.data().profile || {};
                       profile = { ...profile, nickname: e.target.value };
                       setNicknameLoading(<FormLoadingSpinner />);
                       try {
@@ -232,12 +244,12 @@ export default function Me(props) {
                     }}
                     value={
                       pronouns ||
-                      (props.user && props.user?.profile?.pronouns) ||
+                      (currentUser && currentUser.data())?.profile?.pronouns ||
                       ""
                     }
                     onChange={async (e) => {
                       setPronouns(e.target.value);
-                      let profile = props.user.profile || {};
+                      let profile = currentUser.data()?.profile || {};
                       profile = { ...profile, pronouns: e.target.value };
                       setPronounsLoading(<FormLoadingSpinner />);
                       try {
@@ -268,11 +280,13 @@ export default function Me(props) {
                       ),
                     }}
                     value={
-                      title || (props.user && props.user?.profile?.title) || ""
+                      title ||
+                      (currentUser && currentUser.data())?.profile?.title ||
+                      ""
                     }
                     onChange={async (e) => {
                       setTitle(e.target.value);
-                      let profile = props.user.profile || {};
+                      let profile = currentUser.data()?.profile || {};
                       profile = { ...profile, title: e.target.value };
                       setTitleLoading(<FormLoadingSpinner />);
                       try {
@@ -305,11 +319,13 @@ export default function Me(props) {
                       ),
                     }}
                     value={
-                      bio || (props.user && props.user?.profile?.bio) || ""
+                      bio ||
+                      (currentUser && currentUser.data())?.profile?.bio ||
+                      ""
                     }
                     onChange={async (e) => {
                       setBio(e.target.value);
-                      let profile = props.user.profile || {};
+                      let profile = currentUser.data()?.profile || {};
                       profile = { ...profile, bio: e.target.value };
                       setBioLoading(<FormLoadingSpinner />);
                       try {
@@ -431,12 +447,13 @@ export default function Me(props) {
                   }}
                 >
                   {`${
-                    props.user?.profile?.recordings?.length || 0
+                    (currentUser && currentUser.data())?.profile?.recordings
+                      ?.length || 0
                   }/5 Saved Recordings`}
                 </Box>
                 <Box>
-                  {props.user?.profile?.recordings &&
-                    props.user.profile.recordings.map((r) => {
+                  {(currentUser && currentUser.data())?.profile?.recordings.map(
+                    (r) => {
                       return (
                         <Box key={r.videoUrl}>
                           <Box style={{ padding: 5, fontWeight: "bold" }}>
@@ -450,14 +467,11 @@ export default function Me(props) {
                           ></Box>
                         </Box>
                       );
-                    })}
+                    }
+                  )}
                 </Box>
-                {console.log(
-                  !props.user?.profile?.recordings,
-                  !props.user?.profile
-                )}
-                {(!props.user?.profile?.recordings ||
-                  !props.user?.profile?.recordings.length) && (
+                {!(currentUser && currentUser.data())?.profile?.recordings
+                  ?.length && (
                   <Box style={{ fontStyle: "italic", lineHeight: "1.4em" }}>
                     {`It's easy to start, make your first recording by clicking the button on the left and following the prompt.`}
                   </Box>

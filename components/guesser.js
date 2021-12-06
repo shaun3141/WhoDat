@@ -38,7 +38,7 @@ export default function Guesser(props) {
 
   function setupGame() {
     const tempList = (props.allUsers || []).filter(
-      (u) => u?.profile?.recordings?.length
+      (u) => u?.profile?.recordings?.length && u?.profile?.name
     );
 
     // https://stackoverflow.com/a/12646864

@@ -34,7 +34,11 @@ function WhoDat({ Component, pageProps }) {
     fetchData();
   }, [store, authUser]);
 
-  if (authUser && authUser.email.indexOf("@gmail") > -1) {
+  if (
+    authUser &&
+    authUser.email.indexOf("@gmail") > -1 &&
+    authUser.email.indexOf("shaun.t.vanweelden") === -1
+  ) {
     return (
       <Layout user={authUser}>
         <InvalidEmail

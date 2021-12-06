@@ -30,6 +30,7 @@ export default function Game(props) {
 
   useEffect(() => {
     async function fetchData() {
+      console.log("Game User", props.user);
       try {
         setLoading(true);
         const querySnapshot = await getDocs(
