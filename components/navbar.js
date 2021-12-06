@@ -38,7 +38,7 @@ export default function Navbar(props) {
         <div style={{ display: "inline-block", marginTop: "-30px" }}>
           {props?.user ? (
             <div>
-              <Button
+              {/* <Button
                 id="demo-customized-button"
                 aria-controls="demo-customized-menu"
                 aria-haspopup="true"
@@ -51,8 +51,32 @@ export default function Navbar(props) {
                   👋 {props?.user?.displayName}
                 </div>
                 <MoreVertIcon />
+              </Button> */}
+
+              <Button variant="contained" style={{ margin: "0 10px" }}>
+                <Link href="/" passHref>
+                  🤔 Play WhoDat
+                </Link>
               </Button>
-              <StyledMenu
+              <Button variant="contained" style={{ margin: "0 10px" }}>
+                <Link href="/me" passHref>
+                  💁‍♀️💁‍♂️ Me
+                </Link>
+              </Button>
+              <Button variant="outlined" style={{ margin: "0 10px" }}>
+                <Link href="/settings" passHref>
+                  🤓 Settings
+                </Link>
+              </Button>
+              <Button
+                variant="outlined"
+                style={{ margin: "0 10px" }}
+                onClick={handleLogout}
+              >
+                ✌️ Log out
+              </Button>
+
+              {/* <StyledMenu
                 id="demo-positioned-menu"
                 aria-labelledby="demo-positioned-button"
                 anchorEl={anchorEl}
@@ -70,7 +94,6 @@ export default function Navbar(props) {
                 <Link href="/" passHref>
                   <MenuItem onClick={handleClose}>
                     <ListItemIcon>
-                      {/* <PlayCircleIcon fontSize="small" /> */}
                       <div
                         style={{
                           fontSize: "1.4em",
@@ -90,7 +113,6 @@ export default function Navbar(props) {
                 <Link href="/me" passHref>
                   <MenuItem onClick={handleClose}>
                     <ListItemIcon>
-                      {/* <MovieFilterIcon fontSize="small" /> */}
                       <div
                         style={{
                           fontSize: "1.4em",
@@ -110,7 +132,6 @@ export default function Navbar(props) {
                 <Link href="/settings" passHref>
                   <MenuItem onClick={handleClose}>
                     <ListItemIcon>
-                      {/* <SettingsIcon fontSize="small" /> */}
                       <div
                         style={{
                           fontSize: "1.4em",
@@ -130,7 +151,6 @@ export default function Navbar(props) {
                 <Divider />
                 <MenuItem onClick={handleLogout}>
                   <ListItemIcon>
-                    {/* <Logout fontSize="small" /> */}
                     <div
                       style={{
                         fontSize: "1.4em",
@@ -146,7 +166,7 @@ export default function Navbar(props) {
                   </ListItemIcon>
                   Log out
                 </MenuItem>
-              </StyledMenu>
+              </StyledMenu> */}
             </div>
           ) : (
             <Link href="/login" passHref>
