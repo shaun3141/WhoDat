@@ -52,7 +52,7 @@ scoreboard`}
 
         <div className={styles.grid}>
           <Box className={styles.card}>
-            <Link href="/login" passHref className={styles.card}>
+            <Link href="/login" passHref>
               <Box>
                 <h2>Start Playing &rarr;</h2>
                 <p>
@@ -63,12 +63,14 @@ all about connections.`}
             </Link>
           </Box>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>{`What's WhoDat?`} &rarr;</h2>
-            <p>
-              Not sure what the hype is all about? No worries, we will show you.
-            </p>
-          </a>
+          <Box className={styles.card}>
+            <Link href="/what" passHref>
+              <Box>
+                <h2>{`What's WhoDat?`} &rarr;</h2>
+                <p>{`Read the story about how this project came to be and how it was built.`}</p>
+              </Box>
+            </Link>
+          </Box>
 
           <a href="https://www.loom.com" className={styles.card}>
             <h2>Loom &rarr;</h2>
@@ -78,15 +80,16 @@ all about connections.`}
             </p>
           </a>
 
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Connect &rarr;</h2>
-            <p>
-              {`Learn about the project and connect with it's creator, Shaun VanWeelden`}
-            </p>
-          </a>
+          <Box className={styles.card}>
+            <Link href="/shaun" passHref>
+              <Box>
+                <h2>Connect &rarr;</h2>
+                <p>
+                  {`Learn about and connect with the author of WhoDat, Shaun VanWeelden`}
+                </p>
+              </Box>
+            </Link>
+          </Box>
         </div>
         <div style={{ display: "inline-block", width: 300 }}></div>
       </div>

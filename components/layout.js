@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Link from "next/link";
 
 import styles from "./layout.module.css";
 import { Box, Menu, MenuItem, ListItemIcon, Divider } from "@mui/material";
@@ -24,13 +25,14 @@ export default function Layout(props) {
         <Box className={styles.container}>{props.children}</Box>
 
         <footer className={styles.footer}>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {`Made with Holiday Spirit by Shaun VanWeelden`}
-          </a>
+          Made with Holiday Spirit by{" "}
+          <Link href="/" passHref={true}>
+            <span
+              style={{ color: "#1976d2", cursor: "pointer", marginLeft: 6 }}
+            >
+              Shaun VanWeelden
+            </span>
+          </Link>
         </footer>
       </main>
     </>
