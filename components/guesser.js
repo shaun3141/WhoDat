@@ -89,7 +89,13 @@ export default function Guesser(props) {
                         key={new Date()} // Force a re-render as often as we can :sweat-smile:
                         sx={{ width: 300 }}
                         options={filteredUserList}
-                        getOptionLabel={(option) => option.profile.name}
+                        getOptionLabel={(option) =>
+                          `${option.profile.name}${
+                            option.profile.nickname
+                              ? ` (${option.profile.nickname})`
+                              : ""
+                          }`
+                        }
                         renderInput={(params) => (
                           <TextField
                             {...params}
@@ -99,10 +105,21 @@ export default function Guesser(props) {
                         )}
                         renderOption={(props, option, { inputValue }) => {
                           const matches = match(
-                            option.profile.name,
+                            `${option.profile.name}${
+                              option.profile.nickname
+                                ? ` (${option.profile.nickname})`
+                                : ""
+                            }`,
                             inputValue
                           );
-                          const parts = parse(option.profile.name, matches);
+                          const parts = parse(
+                            `${option.profile.name}${
+                              option.profile.nickname
+                                ? ` (${option.profile.nickname})`
+                                : ""
+                            }`,
+                            matches
+                          );
 
                           return (
                             <li {...props}>

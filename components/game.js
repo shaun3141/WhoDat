@@ -1,19 +1,16 @@
 import { useEffect, useState } from "react";
+import Head from "next/head";
 
-import { Box, Grid, Paper, CircularProgress } from "@mui/material";
+import { Box, Grid, Paper } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import firebase from "../firebase/clientApp";
 import {
   getFirestore,
   collection,
-  addDoc,
-  DocumentReference,
+  getDocs,
   query,
   where,
 } from "firebase/firestore";
-import { useCollectionDataOnce } from "react-firebase-hooks/firestore";
-
-import Head from "next/head";
 
 import Leaderboard from "./leaderboard";
 import Guesser from "./guesser";
@@ -27,40 +24,51 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function Game(props) {
   const [loading, setLoading] = useState(true);
+  const [allUsers, setAllUsers] = useState([]);
 
   const store = getFirestore(firebase);
-
-  // If getting data continuously, it loads one user into state at a time..
-  // Which is hard to work with for useEffect randomly setting the game state..
-  const [allUsers, allUsersLoading, allUsersError] = useCollectionDataOnce(
-    props.user &&
-      query(
-        collection(store, "users"),
-        where("organization", "==", props.user.organization)
-      ),
-    {
-      snapshotListenOptions: { includeMetadataChanges: false },
-    }
-  );
 
   useEffect(() => {
     async function fetchData() {
       try {
+        setLoading(true);
+        const querySnapshot = await getDocs(
+          props.user &&
+            query(
+              collection(store, "users"),
+              where("organization", "==", props.user.organization)
+            )
+        );
+        querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data());
+        });
+        console.log(
+          querySnapshot.docs.map((d) => {
+            return d.data();
+          })
+        );
+        setAllUsers(
+          querySnapshot.docs.map((d) => {
+            return d.data();
+          })
+        );
+
         setLoading(false);
       } catch (e) {
         console.error("Error", e);
       }
     }
     fetchData();
-  }, [props.user, store, allUsers]);
+  }, [props.user, store]);
 
   return (
     <>
       <Head>
         <title>WhoDat | Play</title>
       </Head>
-      {allUsersLoading && <LoadingSpinner />}
-      {!allUsersLoading && (
+      {loading && <LoadingSpinner />}
+      {!loading && (
         <Grid container spacing={2}>
           <Grid item xs={7}>
             <Guesser allUsers={allUsers} store={store} user={props.user} />
