@@ -452,23 +452,23 @@ export default function Me(props) {
                   }/5 Saved Recordings`}
                 </Box>
                 <Box>
-                  {(currentUser && currentUser.data())?.profile?.recordings.map(
-                    (r) => {
-                      return (
-                        <Box key={r.videoUrl}>
-                          <Box style={{ padding: 5, fontWeight: "bold" }}>
-                            {r.prompt}
-                          </Box>
-                          <Box style={{ padding: "5px" }}>
-                            <i>{r.description}</i>
-                          </Box>
-                          <Box
-                            dangerouslySetInnerHTML={{ __html: r.videoHTML }}
-                          ></Box>
+                  {(
+                    currentUser && currentUser.data()
+                  )?.profile?.recordings?.map((r) => {
+                    return (
+                      <Box key={r.videoUrl}>
+                        <Box style={{ padding: 5, fontWeight: "bold" }}>
+                          {r.prompt}
                         </Box>
-                      );
-                    }
-                  )}
+                        <Box style={{ padding: "5px" }}>
+                          <i>{r.description}</i>
+                        </Box>
+                        <Box
+                          dangerouslySetInnerHTML={{ __html: r.videoHTML }}
+                        ></Box>
+                      </Box>
+                    );
+                  })}
                 </Box>
                 {!(currentUser && currentUser.data())?.profile?.recordings
                   ?.length && (
