@@ -203,7 +203,7 @@ export default function Guesser(props) {
                             );
                             if (
                               !props.user?.profile?.score ||
-                              props.user.profile.score < userNumber + 2
+                              props.user.profile.score < userNumber + 1
                             )
                               try {
                                 await updateDoc(
