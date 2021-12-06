@@ -30,7 +30,7 @@ export default function Landing(props) {
   return (
     <>
       <Head>
-        <title>WhoDat | Welcome</title>
+        <title>WhoDat</title>
       </Head>
       <div style={{ textAlign: "center" }}>
         <h1 className={styles.title}>
@@ -56,7 +56,7 @@ scoreboard`}
               <Box>
                 <h2>Start Playing &rarr;</h2>
                 <p>
-                  {`Create a new WhoDat game for the office. It's free, easy, and
+                  {`Create a WhoDat game for the office. It's free, easy, and
 all about connections.`}
                 </p>
               </Box>
