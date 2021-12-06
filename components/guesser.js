@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 import { Box, Button } from "@mui/material";
 import ReplayIcon from "@mui/icons-material/Replay";
@@ -53,22 +54,23 @@ export default function Guesser(props) {
 
   return (
     <>
+      <Box style={{ textAlign: "center" }}>
+        <Box
+          style={{
+            width: "100%",
+            maxWidth: "500px",
+            display: "inline-block",
+            height: "45px",
+          }}
+        >
+          <h2 style={{ float: "left" }}>Who is dat? 🤔</h2>
+          <h2 style={{ float: "right" }}>
+            Score: <span style={{ color: "#1976d2" }}>{userNumber}</span>
+          </h2>
+        </Box>
+      </Box>
       {filteredUserList.length ? (
         <Box style={{ textAlign: "center" }}>
-          <Box
-            style={{
-              width: "100%",
-              maxWidth: "500px",
-              display: "inline-block",
-              height: "45px",
-            }}
-          >
-            <h2 style={{ float: "left" }}>Who is dat? 🤔</h2>
-            <h2 style={{ float: "right" }}>
-              Score: <span style={{ color: "#1976d2" }}>{userNumber}</span>
-            </h2>
-          </Box>
-
           {filteredUserList && (
             <>
               {guessedCorrect || guessedCorrect === null ? (
@@ -256,7 +258,45 @@ export default function Guesser(props) {
           )}
         </Box>
       ) : (
-        <LoadingSpinner />
+        <>
+          <Box
+            style={{
+              width: "100%",
+              height: 300,
+              position: "relative",
+              marginTop: 30,
+            }}
+          >
+            <Image
+              src={`/NoRecordingsYet.gif`}
+              alt="Try again!"
+              layout="fill"
+              objectFit="contain"
+            />
+          </Box>
+          <Box
+            style={{
+              textAlign: "center",
+              fontSize: "1.4em",
+              marginTop: "30px",
+            }}
+          >
+            <Box style={{ fontWeight: "bold" }}>
+              Wait a second, no one has recorded anything yet!
+            </Box>
+            <Box style={{ marginTop: 20 }}>
+              You should{" "}
+              <Link href="/me" passHref={true}>
+                <>
+                  <span style={{ color: "#1976d2", cursor: "pointer" }}>
+                    set up your profile
+                  </span>
+                  <span>.</span>
+                </>
+              </Link>
+            </Box>
+          </Box>
+        </>
       )}
     </>
   );

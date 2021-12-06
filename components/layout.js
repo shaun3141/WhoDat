@@ -2,13 +2,7 @@ import { useState } from "react";
 
 import styles from "./layout.module.css";
 import { Box, Menu, MenuItem, ListItemIcon, Divider } from "@mui/material";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import PlayCircleIcon from "@mui/icons-material/PlayCircle";
-import MovieFilterIcon from "@mui/icons-material/MovieFilter";
-import SettingsIcon from "@mui/icons-material/Settings";
-import Logout from "@mui/icons-material/Logout";
 import { styled, alpha } from "@mui/material/styles";
-import Link from "next/link";
 
 import firebase from "../firebase/clientApp"; // Initializes Firebase
 import { getAuth } from "firebase/auth";

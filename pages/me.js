@@ -401,7 +401,7 @@ export default function Me(props) {
                   <Box>
                     <ul>
                       <li>{"👍 Keep it between 15 and 60 seconds"}</li>
-                      <li>{"👍 When recording, select 'Camera Only' video"}</li>
+                      <li>{`👍 When recording, select "Camera Only" video in "Video Settings"`}</li>
                       <li>
                         {"👎 Do "}
                         <b>NOT</b>
@@ -445,6 +445,16 @@ export default function Me(props) {
                       );
                     })}
                 </Box>
+                {console.log(
+                  !props.user?.profile?.recordings,
+                  !props.user?.profile
+                )}
+                {(!props.user?.profile?.recordings ||
+                  !props.user?.profile?.recordings.length) && (
+                  <Box style={{ fontStyle: "italic", lineHeight: "1.4em" }}>
+                    {`It's easy to start, make your first recording by clicking the button on the left and following the prompt.`}
+                  </Box>
+                )}
               </Paper>
             </Grid>
           </Grid>

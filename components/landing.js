@@ -39,7 +39,8 @@ export default function Landing(props) {
           </Link> */}
           WhoDat
         </h1>
-        <video width="800" height="375" muted autoPlay>
+        <video style={{ width: "100%", maxWidth: 800 }} muted autoPlay>
+          {/* width="800" height="375" */}
           <source src="/ReturningToWork.mp4" type="video/mp4" />
         </video>
         <h2>Avoid Awkward Encounters at the Office with WhoDat.</h2>

@@ -6,6 +6,7 @@ import { getAuth } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useDocument } from "react-firebase-hooks/firestore";
 import { getFirestore, doc } from "firebase/firestore";
+import InvalidEmail from "./invalid_email";
 
 function WhoDat({ Component, pageProps }) {
   const [authUser, authUserLoading, error] = useAuthState(getAuth());
@@ -18,10 +19,10 @@ function WhoDat({ Component, pageProps }) {
     }
   );
 
-  return (
-    <>
+  if (authUser && authUser.email.indexOf("@gmail") > -1) {
+    return (
       <Layout user={authUser}>
-        <Component
+        <InvalidEmail
           {...pageProps}
           authUser={authUser}
           authUserLoading={authUserLoading}
@@ -29,7 +30,19 @@ function WhoDat({ Component, pageProps }) {
           userLoading={userLoading}
         />
       </Layout>
-    </>
+    );
+  }
+
+  return (
+    <Layout user={authUser}>
+      <Component
+        {...pageProps}
+        authUser={authUser}
+        authUserLoading={authUserLoading}
+        user={user && user.data()}
+        userLoading={userLoading}
+      />
+    </Layout>
   );
 }
 
