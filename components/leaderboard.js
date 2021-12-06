@@ -48,13 +48,17 @@ export default function Leaderboard(props) {
   ];
 
   const data = allUsers
-    ? allUsers.map((u, i) => {
-        return {
-          id: i + 1,
-          name: u.displayName,
-          score: u?.profile?.score || 0,
-        };
-      })
+    ? allUsers
+        .sort((a, b) => {
+          return a.profile?.score > b.profile?.score ? -1 : 1;
+        })
+        .map((u, i) => {
+          return {
+            id: i + 1,
+            name: u.displayName,
+            score: u?.profile?.score || 0,
+          };
+        })
     : [];
 
   return (

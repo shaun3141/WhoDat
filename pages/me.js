@@ -76,12 +76,19 @@ export default function Me(props) {
         // Use the Loom Embed SDK to generate an HTML Embed
         const { html } = await oembed(video.sharedUrl, { width: 521 });
 
+        // Ensure no weirld Loom bugs get introduced
+        // Buggy iframe returned was:
+        // <iframe src="https://www.loom.com/embed/f74860a497a54ed88a499cd8c959e16b" frameborder="0" width="12009599006321320" height="9007199254740991" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+        const processedHtml = html
+          .replace(`width="12009599006321320"`, `width="521"`)
+          .replace(`height="9007199254740991"`, `height="390.75"`);
+
         let profile = props.user.profile || {};
         let recordings = profile.recordings || [];
         recordings.push({
           ...prompts[promptId],
           videoUrl: video.sharedUrl,
-          videoHTML: html,
+          videoHTML: processedHtml,
         });
         profile = { ...profile, recordings: recordings };
 

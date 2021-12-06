@@ -9,7 +9,7 @@ class MyDocument extends Document {
           <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
           <meta
             name="description"
-            content="Avoid awkward encounters at the office with WhoDat. Can you recognize your co-workers and guess who they are to earn a spot on the scoreboard?"
+            content="Avoid awkward encounters at the office with WhoDat. Can you recognize your co-workers and guess who they are to earn a spot on the leaderboard?"
           ></meta>
           <link
             rel="apple-touch-icon"
@@ -40,7 +40,7 @@ class MyDocument extends Document {
           <meta property="og:url" content="https://whodat.app/" />
           <meta
             property="og:image"
-            content="https://whodat.app/WhoDat_OG_Image"
+            content="https://whodat.app/WhoDat_OG_Image.jpg"
           />
         </Head>
         <body>

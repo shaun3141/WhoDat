@@ -83,6 +83,7 @@ export default function Guesser(props) {
                         ]
                       }
                     />
+
                     <Box style={{ display: "flex", justifyContent: "center" }}>
                       <Autocomplete
                         id="highlights-demo"
@@ -304,13 +305,11 @@ export default function Guesser(props) {
             <Box style={{ marginTop: 20 }}>
               You should{" "}
               <Link href="/me" passHref={true}>
-                <>
-                  <span style={{ color: "#1976d2", cursor: "pointer" }}>
-                    set up your profile
-                  </span>
-                  <span>.</span>
-                </>
+                <span style={{ color: "#1976d2", cursor: "pointer" }}>
+                  set up your profile
+                </span>
               </Link>
+              .
             </Box>
           </Box>
         </>
@@ -386,7 +385,7 @@ function GuessResult(props) {
         {props.user.profile.bio && (
           <Box>
             <Box style={{ padding: 5 }}>
-              <b>Bio</b>
+              <b>Fun Fact / Something Extra:</b>
             </Box>
             <Box style={{ padding: 5 }}>
               <i>{props.user.profile.bio}</i>
