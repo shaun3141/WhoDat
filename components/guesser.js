@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import { Box, Button } from "@mui/material";
 import ReplayIcon from "@mui/icons-material/Replay";
+import PersonIcon from "@mui/icons-material/Person";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import parse from "autosuggest-highlight/parse";
@@ -69,10 +70,44 @@ export default function Guesser(props) {
           </h2>
         </Box>
       </Box>
+
+      {/* User has no profile, but other profiles exist */}
+      {!props.user?.profile && filteredUserList.length && (
+        <Box
+          style={{
+            width: 521,
+            margin: "10px auto",
+            borderRadius: 5,
+            border: "solid 2px #1976d2",
+            padding: 15,
+          }}
+        >
+          <Box style={{ fontWeight: "bold", marginBottom: 10 }}>
+            Are you ready to get in on the action?
+          </Box>
+          <Box>
+            <Link href="/" passHref={true}>
+              <span style={{ color: "#1976d2", cursor: "pointer" }}>
+                Fill out your profile
+                <PersonIcon
+                  style={{
+                    fontSize: "20px",
+                    paddingTop: "5px",
+                    marginBottom: "-3px",
+                  }}
+                />
+              </span>
+            </Link>
+            {`, it's easy! Check your nose and then make your first recording.`}
+          </Box>
+        </Box>
+      )}
+
       {filteredUserList.length ? (
         <Box style={{ textAlign: "center" }}>
           {filteredUserList && (
             <>
+              {/* Users exist, lets play */}
               {guessedCorrect || guessedCorrect === null ? (
                 userNumber < filteredUserList.length ? (
                   <>

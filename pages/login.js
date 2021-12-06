@@ -3,7 +3,12 @@ import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import { getAuth, GoogleAuthProvider, OAuthProvider } from "firebase/auth";
 
 const auth = getAuth();
+
 const google = new GoogleAuthProvider();
+google.setCustomParameters({
+  prompt: "select_account",
+});
+
 const microsoft = new OAuthProvider("microsoft.com");
 
 // Configure FirebaseUI.
