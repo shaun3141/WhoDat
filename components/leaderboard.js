@@ -50,7 +50,7 @@ export default function Leaderboard(props) {
   const data = allUsers
     ? allUsers
         .sort((a, b) => {
-          return a.profile?.score > b.profile?.score ? -1 : 1;
+          return (a.profile?.score || 0) > (b.profile?.score || 0) ? -1 : 1;
         })
         .map((u, i) => {
           return {
@@ -63,7 +63,7 @@ export default function Leaderboard(props) {
 
   return (
     <>
-      {props.allUsers ? (
+      {allUsers ? (
         <Box style={{ textAlign: "center" }}>
           <h2>Real-time Leaderboard 🏆</h2>
           <Box style={{ height: 400, width: "100%" }}>

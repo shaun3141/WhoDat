@@ -86,7 +86,7 @@ export default function Guesser(props) {
             Are you ready to get in on the action?
           </Box>
           <Box>
-            <Link href="/" passHref={true}>
+            <Link href="/me" passHref={true}>
               <span style={{ color: "#1976d2", cursor: "pointer" }}>
                 Fill out your profile
                 <PersonIcon
@@ -196,9 +196,14 @@ export default function Guesser(props) {
                                 )
                             );
                             setGuessedCorrect(true);
+                            console.log(
+                              "Score",
+                              props.user.profile.score,
+                              userNumber
+                            );
                             if (
                               !props.user?.profile?.score ||
-                              props.user.profile.score < userNumber + 1
+                              props.user.profile.score < userNumber + 2
                             )
                               try {
                                 await updateDoc(
@@ -206,8 +211,7 @@ export default function Guesser(props) {
                                   {
                                     profile: {
                                       ...(props.user?.profile || {}),
-                                      score:
-                                        (props.user?.profile?.score || 0) + 1,
+                                      score: userNumber + 1,
                                     },
                                   }
                                 );

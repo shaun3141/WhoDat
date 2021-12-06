@@ -74,7 +74,7 @@ export default function Game(props) {
             <Guesser allUsers={allUsers} store={store} user={props.user} />
           </Grid>
           <Grid item xs={5}>
-            <Leaderboard allUsers={allUsers} store={store} user={props.user} />
+            <Leaderboard store={store} user={props.user} />
           </Grid>
         </Grid>
       )}
