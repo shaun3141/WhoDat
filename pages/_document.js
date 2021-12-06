@@ -37,11 +37,14 @@ class MyDocument extends Document {
             property="og:title"
             content="Avoid Awkward Work Encounters with WhoDat"
           />
+          <meta property="og:type" content="website" />
+          <meta property="og:site_name" content="WhoDat" />
           <meta property="og:url" content="https://whodat.app/" />
           <meta
             property="og:image"
             content="https://whodat.app/WhoDat_OG_Image.jpg"
           />
+          <meta name="twitter:card" content="summary_large_image"></meta>
         </Head>
         <body>
           <Main />
