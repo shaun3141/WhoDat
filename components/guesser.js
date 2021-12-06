@@ -198,7 +198,8 @@ export default function Guesser(props) {
                             setGuessedCorrect(true);
                             console.log(
                               "Score",
-                              props.user.profile.score,
+                              props.user?.profile?.score,
+                              !props.user?.profile?.score,
                               userNumber
                             );
                             if (
