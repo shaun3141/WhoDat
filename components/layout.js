@@ -26,7 +26,7 @@ export default function Layout(props) {
 
         <footer className={styles.footer}>
           Made with Holiday Spirit by{" "}
-          <Link href="/" passHref={true}>
+          <Link href="/shaun" passHref={true}>
             <span
               style={{ color: "#1976d2", cursor: "pointer", marginLeft: 6 }}
             >
