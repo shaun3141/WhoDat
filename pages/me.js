@@ -153,7 +153,7 @@ export default function Me(props) {
                     Your Profile
                   </Box>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={12} md={3}>
                   <TextField
                     id="name"
                     label="Name"
@@ -190,7 +190,7 @@ export default function Me(props) {
                     }}
                   />
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={12} md={3}>
                   <TextField
                     id="nickname"
                     label="Nickname (optional)"
@@ -227,7 +227,7 @@ export default function Me(props) {
                     }}
                   />
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={12} md={3}>
                   <TextField
                     id="pronouns"
                     label="Preferred Pronouns (optional)"
@@ -264,7 +264,7 @@ export default function Me(props) {
                     }}
                   />
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={12} md={3}>
                   <TextField
                     id="title"
                     label="Title / What do you do?"
@@ -301,7 +301,7 @@ export default function Me(props) {
                     }}
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} md={12}>
                   <TextField
                     id="bio"
                     label="Bio / Fun Fact / Something Extra"
@@ -343,7 +343,7 @@ export default function Me(props) {
               </Grid>
             </Paper>
             <Grid item xs={12} style={{ height: 30 }}></Grid>
-            <Grid item xs={6} style={{ paddingLeft: 0 }}>
+            <Grid item xs={12} md={6} style={{ paddingLeft: 0 }}>
               <Paper style={{ padding: 10 }}>
                 <Box
                   style={{
@@ -423,7 +423,7 @@ export default function Me(props) {
                   </Box>
                   <Box>
                     <ul>
-                      <li>{"👍 Keep it between 15 and 60 seconds"}</li>
+                      <li>{"👍 Keep it between 5 and 30 seconds"}</li>
                       <li>{`👍 When recording, select "Camera Only" video in "Video Settings"`}</li>
                       <li>
                         {"👎 Do "}
@@ -437,7 +437,7 @@ export default function Me(props) {
                 </Box>
               </Paper>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Paper style={{ padding: 10 }}>
                 <Box
                   style={{

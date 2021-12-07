@@ -65,7 +65,7 @@ const prompts = [
     description: "Which holiday is your favorite and why?",
   },
   {
-    prompt: "Sweettooth",
+    prompt: "Sweet tooth",
     description: "What is your favorite dessert?",
   },
   {
